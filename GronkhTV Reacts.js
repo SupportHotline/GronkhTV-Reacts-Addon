@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         GronkhTV Reacts
-// @version      0.1
+// @version      0.1-MutationObserver
 // @description  Fügt der Kapitelübersicht auf Gronkh.tv Reacts hinzu, um die Navigation und den Überblick über die Streams zu verbessern.
 // @author       Support Hotline
 // @match        https://gronkh.tv/streams/*
