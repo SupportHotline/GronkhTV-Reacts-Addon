@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GronkhTV Reacts
 // @version      0.1
-// @description  Fügt den Kapiteln Reacts hinzu
+// @description  Fügt der Kapitelübersicht auf Gronkh.tv Reacts hinzu, um die Navigation und den Überblick über die Streams zu verbessern.
 // @author       Support Hotline
 // @match        https://gronkh.tv/streams/*
 // @icon         https://gronkh.tv/assets/favicon/favicon.ico
@@ -12,18 +12,15 @@
   "use strict";
 
   //### SETTINGS ###
-  const _Delay = 5000; //Verzögerung um das vollständige laden der Seite abzuwarten.
   const _AllowedUsers = ["Support Hotline", "HackenPorsche"]; //Und jeden anderen Nutzer den du Traust
-  const _ThumbnailUrl = "https://static-cdn.jtvnw.net/ttv-boxart/509658-48x64.jpg" //Kapitel Thumbnail
+  const _ThumbnailUrl = "https://static-cdn.jtvnw.net/ttv-boxart/509658-48x64.jpg"; //Kapitel Thumbnail
 
   // Funktion zum Hinzufügen eines Buttons
-  function addChapterButton(
-    segmentName,
-    segmentTitle,
-    timeStamp
-  ) {
+  function addChapterButton(segmentName, segmentTitle, timeStamp) {
     // Das Ziel-Element finden
-    const parentDiv = document.querySelector("div.g-video-description-flex-list.ng-tns-c83-18.ng-star-inserted");
+    const parentDiv = document.querySelector(
+      "div.g-video-description-flex-list.ng-tns-c83-18.ng-star-inserted"
+    );
 
     if (!parentDiv) {
       console.error("Das Ziel-Element wurde nicht gefunden!");
@@ -90,45 +87,66 @@
     parentDiv.appendChild(button);
   }
 
-  // Kommentar suche und neue Kapitel erstellen
-  setTimeout(() => {
-    const commentWrappers = document.querySelectorAll(
-      "div.g-video-comment-wrapper.ng-star-inserted"
-    );
-
-    commentWrappers.forEach((node) => {
-      const commentDiv = node.querySelector("div.g-video-comment-content");
-      const timeButton = node.querySelector("div.g-video-comment-time button");
-      const authorSpan = node.querySelector("span.ng-star-inserted");
-
-      if (commentDiv && timeButton && authorSpan) {
-        const comment = commentDiv.innerText;
-        const author = authorSpan.innerText;
-        if (
-          comment.includes("timestamp | ") &&
-          stringMatchesAny(author, _AllowedUsers)
-        ) {
-          const parts = comment.split("|");
-
-          // Leerzeichen am Anfang oder Ende der Teile entfernen
-          const segmentName = parts[1].trim();
-          const segmentTitle = parts[2].trim();
-          const timeText = timeButton.innerText.trim();
-
-          // Buttons einfügen
-          addChapterButton(
-            segmentName, // SegmentName
-            segmentTitle, // SegmentTitle
-            timeText // TimeStamp
-          );
-        }
-      }
-    });
-  }, _Delay); // Verzögerung
-
   function stringMatchesAny(str, array) {
     return array.some((element) => str === element);
   }
+
+  // Wenn Kapitelübersicht geladen wurde nach Kommentaren suchen
+  const observer = new MutationObserver((mutationsList, observer) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === "childList") {
+        // Prüfen, ob Kapitelübersicht hinzugefügt wurde
+        const parentDiv = document.querySelector(
+          "div.g-video-comment-wrapper.ng-star-inserted"
+        );
+        if (parentDiv) {
+          // Wenn Kapitelübersicht gefunden dann Kommentaren suchen
+          const commentWrappers = document.querySelectorAll(
+            "div.g-video-comment-wrapper.ng-star-inserted"
+          );
+
+          commentWrappers.forEach((node) => {
+            const commentDiv = node.querySelector(
+              "div.g-video-comment-content"
+            );
+            const timeButton = node.querySelector(
+              "div.g-video-comment-time button"
+            );
+            const authorSpan = node.querySelector("span.ng-star-inserted");
+
+            if (commentDiv && timeButton && authorSpan) {
+              const comment = commentDiv.innerText;
+              const author = authorSpan.innerText;
+              if (
+                comment.includes("timestamp | ") &&
+                stringMatchesAny(author, _AllowedUsers)
+              ) {
+                const parts = comment.split("|");
+
+                // Leerzeichen am Anfang oder Ende der Teile entfernen
+                const segmentName = parts[1].trim();
+                const segmentTitle = parts[2].trim();
+                const timeText = timeButton.innerText.trim();
+
+                // Buttons einfügen
+                addChapterButton(
+                  segmentName, // SegmentName
+                  segmentTitle, // SegmentTitle
+                  timeText // TimeStamp
+                );
+              }
+            }
+          });
+          // Wenn gefunden observer stoppen
+          observer.disconnect();
+          break;
+        }
+      }
+    }
+  });
+
+  // Observer starten
+  observer.observe(document.body, { childList: true, subtree: true });
 
   //EndOfCode
 })();
