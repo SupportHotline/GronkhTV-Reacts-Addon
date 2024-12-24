@@ -9,7 +9,7 @@
 
 **Funktionen:**
 - **Automatische Kapitel-Erstellung:** Das Skript sucht nach bestimmten Kommentaren im Format `timestamp | SegmentName | SegmentTitle` und erstellt basierend darauf neue Kapitel-Buttons.
-- **Anpassbarer Sicherheitsfilter:** Nur Kommentare von autorisierten Nutzern (standardmäßig "Support Hotline", "HackenPorsche") werden berücksichtigt, um Missbrauch zu verhindern.
+- **Anpassbarer Sicherheitsfilter:** Nur Kommentare von autorisierten Nutzern werden berücksichtigt, um Missbrauch zu verhindern.
 - **Visuelle Anpassung:** Nutzt ein standardisiertes Thumbnail (aus Twitch) für die Kapitelanzeige.
 
 **Wie es funktioniert:**
@@ -22,9 +22,6 @@
 
 **Anpassungen durch Nutzer:**
 - **Variablen anpassen:** Nutzer können die Liste der erlaubten Nutzer (`_AllowedUsers`) nach ihren Wünschen anpassen und das Thumbnail (`_ThumbnailUrl`) personalisieren.
-`  //### SETTINGS ###
-  const _AllowedUsers = ["Support Hotline", "HackenPorsche"]; //Und jeden anderen Nutzer den du Traust
-  const _ThumbnailUrl = "https://static-cdn.jtvnw.net/ttv-boxart/509658-48x64.jpg"; //Kapitel Thumbnail`
 
 **Hinweise:**
 - Aktuell ist leider die einbindung der Kapitel in die Zeitleiste noch nicht möglich. 
