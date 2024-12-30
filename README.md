@@ -8,7 +8,7 @@
 - **Kompatibilität:** Funktioniert auf allen Seiten unter `https://gronkh.tv/streams/*`
 
 **Funktionen:**
-- **Automatische Kapitel-Erstellung:** Das Skript sucht nach bestimmten Kommentaren im Format `timestamp | SegmentName | SegmentTitle` und erstellt basierend darauf neue Kapitel-Buttons.
+- **Automatische Kapitel-Erstellung:** Das Skript sucht nach bestimmten Kommentaren nit dem Schlüsselwort `timestamp | ` im Format `timestamp | {SegmentName} | {SegmentTitle}` und erstellt basierend darauf neue Kapitel-Buttons.
 - **Anpassbarer Sicherheitsfilter:** Nur Kommentare von autorisierten Nutzern werden berücksichtigt, um Missbrauch zu verhindern.
 - **Visuelle Anpassung:** Nutzt ein standardisiertes Thumbnail (aus Twitch) für die Kapitelanzeige.
 
