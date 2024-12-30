@@ -7,6 +7,7 @@
 // @icon         https://gronkh.tv/assets/favicon/favicon.ico
 // @grant        none
 // ==/UserScript==
+// Update manually: https://github.com/SupportHotline/GronkhTV-Reacts-Addon
 
 (function () {
   "use strict";
@@ -162,27 +163,34 @@
         const comment = commentDiv.innerText;
         const author = authorSpan.innerText;
 
-        if (!_AllowedUsers.includes(author)) {
-          return;
-        }
-        if (comment.includes("timestamp | React | ")) {
-          try {
-            const parts = comment.split("|");
+        if (
+          _AllowedUsers.includes(author) &&
+          comment.includes("timestamp | ")
+        ) {
+          const parts = comment.split("|");
+          var segmentName = "Moment";
+          var segmentTitle = "404 not found";
+          var timeText = "00:01";
 
-            // Leerzeichen am Anfang oder Ende der Teile entfernen
-            const segmentName = parts[1].trim();
-            const segmentTitle = parts[2].trim();
-            const timeText = timeButton.innerText.trim();
+            if (parts.length >= 3) {
+              // Leerzeichen am Anfang oder Ende der Teile entfernen
+              segmentName = parts[1].trim();
+              segmentTitle = parts[2].trim();
+              timeText = timeButton.innerText.trim();
+            }
 
-            // Buttons einfügen
-            addChapterButton(
-              segmentName, // SegmentName
-              segmentTitle, // SegmentTitle
-              timeText // TimeStamp
-            );
-          } catch (error) {
-            console.error("Fehler beim Verarbeiten des Kommentars:", error);
-          }
+            if (parts.length == 2) {
+              // Leerzeichen am Anfang oder Ende der Teile entfernen
+              segmentTitle = parts[1].trim();
+              timeText = timeButton.innerText.trim();
+            }
+
+          // Buttons einfügen
+          addChapterButton(
+            segmentName, // SegmentName
+            segmentTitle, // SegmentTitle
+            timeText // TimeStamp
+          );
         }
       }
     });
