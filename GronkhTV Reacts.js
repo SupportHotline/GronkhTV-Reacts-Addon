@@ -13,10 +13,10 @@
   "use strict";
 
   //### SETTINGS ###
-  const _Delay = 5000; //Verzögerung um das vollständige laden der Seite abzuwarten.
-  const _AllowedUsers = ["Support Hotline", "HackenPorsche"]; //Und jeden anderen Nutzer den du Traust
+  const _Delay = 5000; // Verzögerung um das vollständige laden der Seite abzuwarten.
+  const _AllowedUsers = ["Support Hotline", "HackenPorsche"]; // Und jeden anderen Nutzer den du am Trusten bist ;)
   const _ThumbnailUrl =
-    "https://static-cdn.jtvnw.net/ttv-boxart/509658-48x64.jpg"; //Kapitel Thumbnail
+    "https://static-cdn.jtvnw.net/ttv-boxart/509658-48x64.jpg"; // Kapitel Thumbnail
 
   // Funktion zum Hinzufügen eines Buttons
   function addChapterButton(segmentName, segmentTitle, timeStamp) {
