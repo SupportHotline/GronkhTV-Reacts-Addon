@@ -27,4 +27,3 @@
 **Hinweise:**
 - Aktuell ist mir leider die einbindung der Kapitel in die Zeitleiste noch nicht möglich.
 - Das Script wird mit einer 5 sekündigen Verzögerung geladen um abzuwarten, bis alle Seitenelemente geladen sind, da leider mit dem MutationObserver einige Bugs entstehen.
-- In seltenen Fällen werden nicht alle Kommentare erfasst. Investigation läuft noch.
