@@ -175,7 +175,7 @@
             if (parts.length >= 3) {
               // Leerzeichen am Anfang oder Ende der Teile entfernen
               segmentName = parts[1].trim();
-              segmentTitle = parts[2].trim();
+              segmentTitle = parts.slice(2).map(part => part.trim()).join(" | ");
               timeText = timeButton.innerText.trim();
             }
 
