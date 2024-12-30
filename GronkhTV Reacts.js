@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         GronkhTV Reacts
-// @version      0.1-Delay
+// @version      0.1
 // @description  Fügt der Kapitelübersicht auf Gronkh.tv Reacts hinzu, um die Navigation und den Überblick über die Streams zu verbessern.
 // @author       Support Hotline
 // @match        https://gronkh.tv/streams/*
@@ -161,23 +161,28 @@
       if (commentDiv && timeButton && authorSpan) {
         const comment = commentDiv.innerText;
         const author = authorSpan.innerText;
-        if (
-          comment.includes("timestamp | ") &&
-          stringMatchesAny(author, _AllowedUsers)
-        ) {
-          const parts = comment.split("|");
 
-          // Leerzeichen am Anfang oder Ende der Teile entfernen
-          const segmentName = parts[1].trim();
-          const segmentTitle = parts[2].trim();
-          const timeText = timeButton.innerText.trim();
+        if (!_AllowedUsers.includes(author)) {
+          return;
+        }
+        if (comment.includes("timestamp | React | ")) {
+          try {
+            const parts = comment.split("|");
 
-          // Buttons einfügen
-          addChapterButton(
-            segmentName, // SegmentName
-            segmentTitle, // SegmentTitle
-            timeText // TimeStamp
-          );
+            // Leerzeichen am Anfang oder Ende der Teile entfernen
+            const segmentName = parts[1].trim();
+            const segmentTitle = parts[2].trim();
+            const timeText = timeButton.innerText.trim();
+
+            // Buttons einfügen
+            addChapterButton(
+              segmentName, // SegmentName
+              segmentTitle, // SegmentTitle
+              timeText // TimeStamp
+            );
+          } catch (error) {
+            console.error("Fehler beim Verarbeiten des Kommentars:", error);
+          }
         }
       }
     });
